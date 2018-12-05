@@ -22,19 +22,12 @@ public class MediaService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-
-        initMediaPlayer();
         initMediaSession();
+        initMediaPlayer();
 
     }
 
     MediaSessionCompat.Callback mMediaSessionCallback = new MediaSessionCompat.Callback() {
-        @Override
-        public void onCommand(String command, Bundle extras, ResultReceiver cb) {
-            super.onCommand(command, extras, cb);
-            Log.i("Hello",command);
-        }
-
         @Override
         public boolean onMediaButtonEvent(Intent mediaButtonEvent) {
 
@@ -64,10 +57,6 @@ public class MediaService extends Service {
         PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, mediaButtonIntent, 0);
         mMediaSessionCompat.setMediaButtonReceiver(pendingIntent);
         mMediaSessionCompat.setActive(true);
-
-
-
-
     }
     private void initMediaPlayer()
     {
@@ -75,6 +64,7 @@ public class MediaService extends Service {
         mediaPlayer.setWakeMode(getApplicationContext(),PowerManager.PARTIAL_WAKE_LOCK);
         mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
         mediaPlayer.setVolume(0.0f,0.0f);
+        mediaPlayer.start();
     }
 
     @Override
